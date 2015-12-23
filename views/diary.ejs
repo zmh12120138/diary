@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%=diary.date%>></title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script>
+        function show(){
+            var html=document.getElementById('diaryContent').innerText;
+            document.getElementById('diaryContent1').innerHTML=html;
+        }
+    </script>
+    <style>
+        .font-face{
+            font-family: "汉仪平安行简";
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('#toggle').click(function(){
+                $(body).toggleClass('font-face');
+            })
+        })
+    </script>
+</head>
+<body background="/images/<%=numberI%>.jpg" style="background-size: cover" onload="show()" id="body" >
+<div class="container" style="padding-top: 30px" >
+    <div id="toggle" style="background-color: transparent;font-size: 30px;" >戳我切换字体~</div>
+    <table class="table table-striped text-center" >
+        <thead ></thead>
+        <tbody>
+          <tr style="background-color: transparent;font-size: 30px">
+              <td width="40%">日期：<%=diary.date%></td>
+              <td width="30%">天气：<%=diary.weather%></td>
+              <td width="30%">谁写哒：<%=diary.publisherName%></td>
+          </tr>
+        </tbody>
+    </table>
+    <div id="diaryContent" hidden="true">
+        <%=diary.content%>
+    </div>
+    <div id="diaryContent1" style="font-size: 30px">
+
+    </div>
+    <div style="margin-top: 20px;padding-top: 20px;border-top: 1px solid #EEEEEE">
+        <p>&copy; 2015 Minghui Zhao</p>
+    </div>
+</div>
+</body>
+</html>

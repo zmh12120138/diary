@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>♥♥♥♥♥♥</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plupload/plupload.full.min.js"></script>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" type="text/css" href="audio/styles.css" media="all" >
+    <script src="js/z.src.js"></script>
+    <script src="js/ui.js"></script>
+    <script type="text/javascript" src="audio/AudioPlayer.js"></script>
+    <style>
+        .font-face{
+            font-family: "汉仪平安行简";
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            setInterval(function(){
+                fnDate();
+            },1000);
+        });
+        //js 获取当前时间
+        function fnDate(){
+            var oDiv=document.getElementById("time");
+            var notice=document.getElementById('notice');
+            var date=new Date();
+            var year=date.getFullYear();//当前年份
+            var month=date.getMonth();//当前月份
+            var data=date.getDate();//天
+            var hours=date.getHours();//小时
+            var minute=date.getMinutes();//分
+            var second=date.getSeconds();//秒
+            var time=year+"-"+fnW((month+1))+"-"+fnW(data)+" "+fnW(hours)+":"+fnW(minute)+":"+fnW(second);
+            console.log(time)
+            switch (hours){
+                case 0:
+                    noticeYou='新的一天开始啦~';
+                    break;
+                case 1:
+                    noticeYou='1点钟啦，快去睡~'
+                    break;
+                case 2:
+                    noticeYou='2点钟啦，快去睡~~';
+                    break;
+                case 3:
+                    noticeYou='3点钟啦，快去睡~~~';
+                    break;
+                case 4:
+                    noticeYou='4点钟啦，失眠啦吗？';
+                    break;
+                case 5:
+                    noticeYou='5点钟啦，起的好早呦~~';
+                    break;
+                case 6:
+                    noticeYou='6点钟啦，起的好早呦~~';
+                    break;
+                case 7:
+                    noticeYou='7点钟啦，新的一天要精神饱满！';
+                    break;
+                case 8:
+                    noticeYou='8点钟啦，新的一天要精神饱满！';
+                    break;
+                case 9:
+                    noticeYou='9点钟啦，心情愉快~';
+                    break;
+                case 10:
+                    noticeYou='加1个油~';
+                    break;
+                case 11:
+                    noticeYou='加2个油~~';
+                    break;
+                case 12:
+                    noticeYou='中午啦！';
+                    break;
+                case 13:
+                    noticeYou='加3个油~~~';
+                    break;
+                case 14:
+                    noticeYou='加4个油~~~~';
+                    break;
+                case 15:
+                    noticeYou='加5个油~~~~~';
+                    break;
+                case 16:
+                    noticeYou='下午4点啦~';
+                    break;
+                case 17:
+                    noticeYou='下午5点啦~';
+                    break;
+                case 18:
+                    noticeYou='6点啦~';
+                    break;
+                case 19:
+                    noticeYou='哼哼~';
+                    break;
+                case 20:
+                    noticeYou='吼吼哈哈~';
+                    break;
+                case 21:
+                    noticeYou='9点啦！';
+                    break;
+                case 22:
+                    noticeYou='今天快要结束啦~';
+                    break;
+                case 23:
+                    noticeYou='时间不早啦，快去睡觉~晚安~';
+                    break;
+                default:
+                    break;
+          }
+            oDiv.innerText=time;
+            notice.innerText=noticeYou;
+        }
+        //补位 当某个字段不是两位数时补0
+        function fnW(str){
+            var num;
+            str>=10?num=str:num="0"+str;
+            return num;
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#toggle').click(function(){
+               $(body).toggleClass('font-face');
+            })
+        });
+
+        function btnDiary_click(i){
+            var idD=i+'_date';
+            var idP=i+'_publisherName';
+            var diaryDate=document.getElementById(idD).innerText;
+            var publisherName=document.getElementById(idP).innerText;
+            window.open('/diary/'+diaryDate+'/'+publisherName);
+        }
+
+        function getDiary(j)
+        {
+            var pid='#'+j+'Page';
+            var cid=new Array();
+            $('li.active').removeClass('active');
+            $(pid).addClass('active');
+            var xmlhttp;
+            if (window.XMLHttpRequest)
+            {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {// code for IE6, IE5
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function()
+            {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    var getDiary=JSON.parse(xmlhttp.responseText);
+                    for(var i=1;i<=getDiary.length;i++){
+                        var idDate=i+'_date';
+                        var idWeek=i+'_week';
+                        var idWeather=i+'_weather';
+                        var idpublisherName=i+'_publisherName';
+                        var idupdateTime=i+'_updateTime';
+                        document.getElementById(idDate).innerText=getDiary[i-1].date;
+                        document.getElementById(idWeek).innerText=getDiary[i-1].week;
+                        document.getElementById(idWeather).innerText=getDiary[i-1].weather;
+                        document.getElementById(idpublisherName).innerText=getDiary[i-1].publisherName;
+                        document.getElementById(idupdateTime).innerText=new Date(Date.parse(getDiary[i-1].updateTime)).toLocaleDateString();
+                    }
+                }
+            }
+            xmlhttp.open("GET","/ajax/"+j+'/'+Math.random() ,true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body background="<%=imageURL%>" style="background-size: cover;font-size: 25px;" onload="getDiary(1)" id="body">
+<div id="myAudio" style="margin:0 auto;" hidden="true">
+    <audio autoplay="autoplay" loop="loop">
+        <source title="王若琳 - Wild World.mp3" src="<%=musicURL%>" />
+    </audio>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#myAudio").initAudio();
+    });
+</script>
+<div class="container">
+    <ul id="myTab" class="nav nav-tabs " style="height: 50px">
+        <li class="active"><a href="#home" data-toggle="tab">
+                主页</a>
+        </li>
+        <li><a href="#new" data-toggle="tab">新增</a></li>
+        <li id="toggle"><a href="/upload" data-toggle="tab">切换字体</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="home">
+            <h2>你来啦,<%=username%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="time"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="notice"></span></h2>
+            <table border="0" class="table table-hover text-center" >
+                <thead></thead>
+                <tbody>
+                <tr>
+                    <td>日记日期</td>
+                    <td>星期</td>
+                    <td>天气</td>
+                    <td>发布人</td>
+                    <td>发布日期</td>
+                    <td>查看</td>
+                </tr>
+                <%for(var i=0;i<7;i++){%>
+                <tr>
+                    <td class="diary" id="<%=id[i]%>_date"> </td>
+                    <td class="diary" id="<%=id[i]%>_week"></td>
+                    <td class="diary" id="<%=id[i]%>_weather"></td>
+                    <td class="diary" id="<%=id[i]%>_publisherName"></td>
+                    <td class="diary" id="<%=id[i]%>_updateTime"></td>
+                    <td class="diary"><button class="btn btn-sm" onclick="btnDiary_click('<%=id[i]%>')">查看</button></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <ul class="pagination">
+                <%for(var i=0;i<totalPage.length;i++){%>
+                <li id="<%=totalPage[i]%>Page" onclick="getDiary('<%=totalPage[i]%>')"><a><%=totalPage[i]%></a></li>
+                <%}%>
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="new">
+            <div id="info" style="padding-top: 50px">
+                <form role="form" method="post" action="/publish/<%=username%>">
+                    <div class="input-group">
+                        <span class="input-group-addon">日期</span>
+                        <input type="text" class="form-control" name="date" id="date1" style="background-color: transparent"/>
+                    </div>
+                    <script>
+                        var calendar1 = Z.ui.Calendar('#date1', {
+                            // startDate: '2014-05-04',
+                            // endDate: '2014-06-09',
+                            chosenDate: '2015-10-24'
+                        })
+                        var calendar2 = Z.ui.CalendarTwo('#date2', {
+                            startDate: '2008-01-19',
+                            // endDate: '2014-4-15',
+                            chosenDate: '2008-01-26'
+                        })
+                    </script>
+                    <br>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">星期</span>
+                        <select class="form-control" name="week" id="week" style="background-color: transparent">
+                            <option></option>
+                            <option>一</option>
+                            <option>二</option>
+                            <option>三</option>
+                            <option>四</option>
+                            <option>五</option>
+                            <option>六</option>
+                            <option>日</option>
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">天气</span>
+                        <select class="form-control" name="weather" id="weather" style="background-color: transparent">
+                            <option></option>
+                            <option>晴</option>
+                            <option>阴/多云</option>
+                            <option>小雨</option>
+                            <option>中雨</option>
+                            <option>大雨</option>
+                            <option>雨夹雪</option>
+                            <option>小雪</option>
+                            <option>中雪</option>
+                            <option>大雪</option>
+                            <option>雾霾</option>
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">正文</span>
+                        <textarea class="form-control" rows="10" name="content"  id="content" style="background-color: transparent"></textarea>
+                    </div>
+                    <br>
+                    <br>
+
+                    <table class="table text-center" >
+                        <tr>
+                            <td><button id="next" type="submit" class="btn btn-primary">新增</button></td>
+                            <td>&nbsp;</td>
+                            <td><button type="reset" class="btn btn-danger">重置</button></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 20px;padding-top: 20px;border-top: 1px solid #EEEEEE">
+        <p>&copy; 2015 Minghui Zhao</p>
+    </div>
+</div>
+</body>
+</html>

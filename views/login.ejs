@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>login</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        function judge(){
+            var name=document.getElementById('number').value;
+            var password=document.getElementById('password').value;
+            if(name=="" || password==""){
+                document.getElementById('errMsg').innerText="please enter username and password";
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<br>
+<br>
+<br>
+<br>
+<div class="container" style="padding: 150px,50px,50px,50px">
+    <div class="jumbotron" >
+        <h2>login</h2>
+        <br>
+        <h3><a href="../fonts/HYPingAnXingJ.ttf">点击下载字体~~~</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/instruction">字体安装说明~</a> </h3>
+        <br>
+        <form role="form" method="post" id="form2" action="/login">
+            <div class="input-group">
+                <span class="input-group-addon">username</span>
+                <input type="text" class="form-control" id="username" name="username" >
+            </div>
+            <br>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">password</span>
+                <input type="password" class="form-control" id="password" name="password" >
+            </div>
+            <br>
+            <br>
+            <p id="errMsg" style="text-align: center"></p>
+            <div class="container" style="text-align: center">
+                <button type="submit" class="btn btn-primary" onclick="return judge()">submit</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="reset" class="btn btn-danger">reset</button>
+            </div>
+        </form>
+    </div>
+    <div style="margin-top: 20px;padding-top: 20px;border-top: 1px solid #EEEEEE">
+        <p>&copy; 2015 Minghui Zhao</p>
+    </div>
+</div>
+</body>
+</html>

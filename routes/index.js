@@ -17,5 +17,6 @@ router.get('/instruction',function(req,res,next){
 router.post('/publish/:username?',publish.publish);
 router.get('/ajax/:pageNumber?/:randomNumber?',ajax.ajax);
 router.get('/diary/:date?/:publisherName?',diary.diary);
-router.get('/test',test.test);
+//router.get('/test',test.test);
+//router.post('/test',test.post);
 module.exports = router;

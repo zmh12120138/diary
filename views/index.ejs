@@ -10,6 +10,7 @@
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plupload/plupload.full.min.js"></script>
+    <script src="/tinymce/tinymce.min.js"></script>
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" type="text/css" href="audio/styles.css" media="all" >
@@ -22,6 +23,30 @@
             font-weight: bold;
         }
     </style>
+    <script>
+        tinymce.init({
+            selector: '#content',
+            height: 500,
+            theme: 'modern',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools'
+            ],
+            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons',
+            image_advtab: true,
+            templates: [
+                { title: 'Test template 1', content: 'Test 1' },
+                { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+                '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+                '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+    </script>
     <script>
         $(document).ready(function(){
             setInterval(function(){
@@ -168,11 +193,16 @@
                         var idWeather=i+'_weather';
                         var idpublisherName=i+'_publisherName';
                         var idupdateTime=i+'_updateTime';
+                        var date=new Date(Date.parse(getDiary[i-1].updateTime));
+                        var year=date.getFullYear();
+                        var month=date.getMonth();
+                        var data=date.getDate();
+                        var time=year+'年'+month+'月'+data+'日';
                         document.getElementById(idDate).innerText=getDiary[i-1].date;
                         document.getElementById(idWeek).innerText=getDiary[i-1].week;
                         document.getElementById(idWeather).innerText=getDiary[i-1].weather;
                         document.getElementById(idpublisherName).innerText=getDiary[i-1].publisherName;
-                        document.getElementById(idupdateTime).innerText=new Date(Date.parse(getDiary[i-1].updateTime)).toLocaleDateString();
+                        document.getElementById(idupdateTime).innerText=time;
                     }
                 }
             }
@@ -192,7 +222,7 @@
         $("#myAudio").initAudio();
     });
 </script>
-<div class="container">
+<div class="container" style="width:970px;max-width:none !important;">
     <ul id="myTab" class="nav nav-tabs " style="height: 50px">
         <li class="active"><a href="#home" data-toggle="tab">
                 主页</a>
@@ -252,7 +282,6 @@
                         })
                     </script>
                     <br>
-                    <br>
                     <div class="input-group">
                         <span class="input-group-addon">星期</span>
                         <select class="form-control" name="week" id="week" style="background-color: transparent">
@@ -266,7 +295,6 @@
                             <option>日</option>
                         </select>
                     </div>
-                    <br>
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">天气</span>
@@ -285,10 +313,9 @@
                         </select>
                     </div>
                     <br>
-                    <br>
                     <div class="input-group">
                         <span class="input-group-addon">正文</span>
-                        <textarea class="form-control" rows="10" name="content"  id="content" style="background-color: transparent"></textarea>
+                        <textarea  name="content"  id="content" style="background-color: transparent"></textarea>
                     </div>
                     <br>
                     <br>

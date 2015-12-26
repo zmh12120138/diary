@@ -16,6 +16,7 @@
     "connect-flash": "*",
     "express-session": "*",
     "mysql": "*",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+     "nodemailer":"*"
   }
 }

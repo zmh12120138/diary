@@ -14,10 +14,10 @@ exports.redis = {
 
 exports.mailOptions = {
     service: 'QQ',
-    auth_user: '1046778499@qq.com',
-    auth_pass: 'buxy0210.',
+    auth_user: '1805377859@qq.com',
+    auth_pass: 'nlvhejqymekwcded',
 
-    from: 'node io_server <1046778499@qq.com>',  //'<>'中的地址应该与auth_user中的地址一致!
-    to: 'xianyan.bu@ensaving.com.cn',
-    subject: 'servertcp服务器出错'
+    from: 'node server <1805377859@qq.com>',  //'<>'中的地址应该与auth_user中的地址一致!
+    to: '503035535@qq.com',
+    subject: '韵韵来啦~'
 };

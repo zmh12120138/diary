@@ -29,23 +29,33 @@
         })
     </script>
 </head>
-<body background="/images/<%=numberI%>.jpg" style="background-size: cover" onload="show()" id="body" >
+<body background="/<%=imageURL%>" style="background-size: cover" onload="show()" id="body" >
 <div class="container" style="padding-top: 30px" >
-    <div id="toggle" style="background-color: transparent;font-size: 30px;" >戳我切换字体~</div>
-    <table class="table table-striped text-center" >
-        <thead ></thead>
-        <tbody>
-          <tr style="background-color: transparent;font-size: 30px">
-              <td width="40%">日期：<%=diary.date%></td>
-              <td width="30%">天气：<%=diary.weather%></td>
-              <td width="30%">谁写哒：<%=diary.publisherName%></td>
-          </tr>
-        </tbody>
-    </table>
+    <h4 id="toggle"><b>戳我切换字体~</b></h4>
+    <nav class="navbar navbar-default" role="navigation" style="background-color: transparent;font-size: 25px">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">日记信息~</a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse" style="background-color: transparent;font-size: 30px">
+            <ul class="nav navbar-nav">
+                <li><a href="#">日期：<%=diary.date%></a></li>
+                <li><a href="#">天气：<%=diary.weather%></a></li>
+                <li><a href="#">谁写哒：<%=diary.publisherName%></a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div id="diaryContent" hidden="true">
         <%=diary.content%>
     </div>
-    <div id="diaryContent1" style="font-size: 30px">
+    <div id="diaryContent1" style="font-size: 25px">
 
     </div>
     <div style="margin-top: 20px;padding-top: 20px;border-top: 1px solid #EEEEEE">

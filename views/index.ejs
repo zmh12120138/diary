@@ -9,44 +9,22 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/plupload/plupload.full.min.js"></script>
-    <script src="/tinymce/tinymce.min.js"></script>
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" type="text/css" href="audio/styles.css" media="all" >
     <script src="js/z.src.js"></script>
     <script src="js/ui.js"></script>
     <script type="text/javascript" src="audio/AudioPlayer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="ueditor/lang/zh-cn/zh-cn.js"> </script>
     <style>
         .font-face{
             font-family: "汉仪平安行简";
             font-weight: bold;
         }
     </style>
-    <script>
-        tinymce.init({
-            selector: '#content',
-            height: 500,
-            theme: 'modern',
-            plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools'
-            ],
-            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            toolbar2: 'print preview media | forecolor backcolor emoticons',
-            image_advtab: true,
-            templates: [
-                { title: 'Test template 1', content: 'Test 1' },
-                { title: 'Test template 2', content: 'Test 2' }
-            ],
-            content_css: [
-                '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-                '//www.tinymce.com/css/codepen.min.css'
-            ]
-        });
-    </script>
+
     <script>
         $(document).ready(function(){
             setInterval(function(){
@@ -170,7 +148,6 @@
         function getDiary(j)
         {
             var pid='#'+j+'Page';
-            var cid=new Array();
             $('li.active').removeClass('active');
             $(pid).addClass('active');
             var xmlhttp;
@@ -187,7 +164,17 @@
                 if (xmlhttp.readyState==4 && xmlhttp.status==200)
                 {
                     var getDiary=JSON.parse(xmlhttp.responseText);
+                    if(getDiary.length<7){     //当数据长度不足7时，把余下的元素隐藏起来。
+                        var dec=7-getDiary.length;
+                        for(var j=0;j<=dec;j++){
+                            var id=getDiary.length+j;
+                            var jtr='#'+id+'_tr';
+                            $(jtr).hide();
+                        }
+                    }
                     for(var i=1;i<=getDiary.length;i++){
+                        var idtr='#'+i+'_tr';
+                        $(idtr).show();  //把所有元素设置为显示
                         var idDate=i+'_date';
                         var idWeek=i+'_week';
                         var idWeather=i+'_weather';
@@ -195,7 +182,7 @@
                         var idupdateTime=i+'_updateTime';
                         var date=new Date(Date.parse(getDiary[i-1].updateTime));
                         var year=date.getFullYear();
-                        var month=date.getMonth();
+                        var month=date.getMonth()+1;
                         var data=date.getDate();
                         var time=year+'年'+month+'月'+data+'日';
                         document.getElementById(idDate).innerText=getDiary[i-1].date;
@@ -206,8 +193,15 @@
                     }
                 }
             }
-            xmlhttp.open("GET","/ajax/"+j+'/'+Math.random() ,true);
+            xmlhttp.open("GET","/getDiary/"+j+'/'+Math.random() ,true);
             xmlhttp.send();
+        }
+
+        function search(){
+            var condition=document.getElementById('search').value.trim();
+            if(condition){
+                window.open('/search/'+condition);
+            }
         }
     </script>
 </head>
@@ -228,6 +222,14 @@
                 主页</a>
         </li>
         <li><a href="#new" data-toggle="tab">新增</a></li>
+        <li style="width: 530px">
+            <a>
+                <div class="form-group">
+                    <input id="search" type="text" class="form-control" placeholder="搜一搜~">
+                </div>
+            </a>
+        </li>
+        <li onclick="search()"><a>提交</a></li>
         <li id="toggle"><a href="/upload" data-toggle="tab">切换字体</a></li>
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -245,7 +247,7 @@
                     <td>查看</td>
                 </tr>
                 <%for(var i=0;i<7;i++){%>
-                <tr>
+                <tr id="<%=id[i]%>_tr">
                     <td class="diary" id="<%=id[i]%>_date"> </td>
                     <td class="diary" id="<%=id[i]%>_week"></td>
                     <td class="diary" id="<%=id[i]%>_weather"></td>
@@ -257,10 +259,32 @@
                 </tbody>
             </table>
             <ul class="pagination">
+                <li id="laquo"><a>&laquo;</a></li>
                 <%for(var i=0;i<totalPage.length;i++){%>
                 <li id="<%=totalPage[i]%>Page" onclick="getDiary('<%=totalPage[i]%>')"><a><%=totalPage[i]%></a></li>
                 <%}%>
+                <li id="raquo"><a>&raquo;</a></li>
             </ul>
+            <script>
+                 $('#laquo').click(function(){
+                     var pageNumber=$('li.active').text()*1;
+                     if(pageNumber!=1){
+                         getDiary(pageNumber-1);
+                     }else{
+                         alert('已经是第一页啦~')
+                     }
+
+                 })
+                 $('#raquo').click(function(){
+                     var pageNumber=$('li.active').text()*1;
+                     if(pageNumber!= <%=totalPage.length%>){
+                         getDiary(pageNumber+1);
+                     }else{
+                         alert('已经是最后一页啦~')
+                     }
+
+                 })
+            </script>
         </div>
         <div class="tab-pane fade" id="new">
             <div id="info" style="padding-top: 50px">
@@ -313,9 +337,13 @@
                         </select>
                     </div>
                     <br>
+                    <br>
                     <div class="input-group">
                         <span class="input-group-addon">正文</span>
-                        <textarea  name="content"  id="content" style="background-color: transparent"></textarea>
+                        <script name="content" id="editor" type="text/plain" style="width:890px;height:500px;"></script>
+                        <script>
+                            var ue = UE.getEditor('editor');
+                        </script>
                     </div>
                     <br>
                     <br>

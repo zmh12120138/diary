@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索页~</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <style>
+        .font-face{
+            font-family: "汉仪平安行简";
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('#toggle').click(function(){
+               $(body).toggleClass('font-face');
+            })
+        });
+
+        function btnDiary_click(i){
+            var idD=i+'_date';
+            var idP=i+'_publisherName';
+            var diaryDate=document.getElementById(idD).innerText;
+            var publisherName=document.getElementById(idP).innerText;
+            window.open('/diary/'+diaryDate+'/'+publisherName);
+        }
+    </script>
+</head>
+<body background="<%=imageURL%>" style="background-size: cover;font-size: 25px;"  id="body">
+<div class="container" style="width:970px;max-width:none !important;">
+    <ul id="myTab" class="nav nav-tabs " style="height: 50px">
+        <li class="active"><a href="#home" data-toggle="tab">
+                主页</a>
+        </li>
+        <li id="toggle"><a href="/upload" data-toggle="tab">切换字体</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="home">
+            <table border="0" class="table table-hover text-center" >
+                <thead></thead>
+                <tbody>
+                <tr>
+                    <td>日记日期</td>
+                    <td>星期</td>
+                    <td>天气</td>
+                    <td>发布人</td>
+                    <td>查看</td>
+                </tr>
+                <%for(var i=0;i<id.length;i++){%>
+                <tr id="<%=id[i]%>_tr">
+                    <td class="diary" id="<%=id[i]%>_date"><%=diary[i].date%></td>
+                    <td class="diary" id="<%=id[i]%>_week"><%=diary[i].week%></td>
+                    <td class="diary" id="<%=id[i]%>_weather"><%=diary[i].weather%></td>
+                    <td class="diary" id="<%=id[i]%>_publisherName"><%=diary[i].publisherName%></td>
+                    <td class="diary"><button class="btn btn-sm" onclick="btnDiary_click('<%=id[i]%>')">查看</button></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="margin-top: 20px;padding-top: 20px;border-top: 1px solid #EEEEEE">
+        <p>&copy; 2015 Minghui Zhao</p>
+    </div>
+</div>
+</body>
+</html>
